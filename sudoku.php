@@ -7,7 +7,6 @@
 
 function sudoku(){
     $chiffre = mt_rand ( 1 , 9 );
-    $a = 3;
     $lignes = array ( "ligne1" => array( $chiffre , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ),
                       "ligne2" => array( 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0),
                       "ligne3" => array( 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0),
@@ -22,32 +21,47 @@ function sudoku(){
     Filtre ligne1  qui se repete tant qu'il y a plus de 0
     */
 
-    while (in_array( 0 , $lignes["ligne1"] , TRUE)) {
-      for ($i=0; $i < count($lignes) ; $i++) {
-        $chiffre = mt_rand(1, 9);
+    while ( in_array( 0 , $lignes["ligne1"] , TRUE)) {
+        for ( $i = 0 ; $i < count( $lignes ) ; $i++ ) {
+            $chiffre = mt_rand(1, 9);
 
-          while (!in_array($chiffre , $lignes["ligne1"])) {
-            $lignes["ligne1"][$i] = $chiffre;
+            while ( !in_array( $chiffre , $lignes[ "ligne1" ] )) {
+                $lignes[ "ligne1" ][ $i ] = $chiffre;
+            }
         }
-      }
+
+    //principe de decoupe par ligne pour en faire des carrés de 3 sur 3 une ligne"1" devient  cell 
+        if(!in_array( 0 , $lignes["ligne1" ] , true )){
+            $cell = array ( "Cell1" =>  array_slice($lignes['ligne1'] , 0 , 3),
+                            "Cell2" =>  array_slice($lignes['ligne1'] , 3 , -3),
+                            "Cell3" =>  array_slice($lignes['ligne1'] , 6 ),
+                          );
+        }
     }
+    echo " | " . array_sum($lignes["ligne1"]) . " | ";
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-    while (in_array( 0 , $lignes["ligne" . $a  ] , true )) {
-        for ($i=1; $i <= 9; $i++) {
-            $chiffre = mt_rand(1, 9);
 
-              while (!in_array($chiffre , array_column($lignes, 0))) {
-                $lignes["ligne".$i][0] = $chiffre;
+
+    $i = 2;
+    while (in_array( 0 , $lignes["ligne".$i ] , true )) {
+        for ($i=2; $i <= 9; $i++) {
+            for ($r=0; $r <= 8 ; $r++) {
+            $chiffre = mt_rand(1 , 9);
+              while (!in_array($chiffre , $lignes["ligne".$i])) {
+                $lignes["ligne".$i][$r] = $chiffre;
+                $chiffre = mt_rand(1 , 9);
             }
-        }
-        if($lignes == 0){
-            echo "poney";
-        }
-        $a = $a + 1;
-    }
-    print_r($lignes);
 
+        }
+        //ligne de test
+        echo " | " . array_sum($lignes["ligne".$i]) . " | ";
+    }
+        $i++;
+    }
+    print_r($lignes['ligne1']);
+    print_r($cell);
 }
 sudoku();
