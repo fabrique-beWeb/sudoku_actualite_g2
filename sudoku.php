@@ -30,11 +30,11 @@ function sudoku(){
             }
         }
 
-    //principe de decoupe par ligne pour en faire des carrés de 3 sur 3 une ligne"1" devient  cell 
+    //principe de decoupe par ligne pour en faire des carrés de 3 sur 3 une ligne"1" devient  cell
         if(!in_array( 0 , $lignes["ligne1" ] , true )){
-            $cell = array ( "Cell1" =>  array_slice($lignes['ligne1'] , 0 , 3),
-                            "Cell2" =>  array_slice($lignes['ligne1'] , 3 , -3),
-                            "Cell3" =>  array_slice($lignes['ligne1'] , 6 ),
+            $cell1 = array ( array_slice($lignes['ligne1'] , 0 , 3),
+                             array_slice($lignes['ligne1'] , 3 , -3),
+                             array_slice($lignes['ligne1'] , 6 ),
                           );
         }
     }
@@ -62,6 +62,6 @@ function sudoku(){
         $i++;
     }
     print_r($lignes['ligne1']);
-    print_r($cell);
+    print_r($cell1);
 }
 sudoku();
